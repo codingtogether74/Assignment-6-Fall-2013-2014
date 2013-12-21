@@ -7,18 +7,18 @@
 //
 
 #import "TopRegionsAppDelegate.h"
-#import "TopRegionsAppDelegate+MOC.h"
 #import "FlickrFetcher.h"
 #import "Photo+Flickr.h"
 #import "PhotoDatabaseAvailability.h"
+#import "DBHelper.h"
 
 @interface TopRegionsAppDelegate() <NSURLSessionDownloadDelegate>
 @property (copy, nonatomic) void (^flickrDownloadBackgroundURLSessionCompletionHandler)();
 @property (strong, nonatomic) NSURLSession *flickrDownloadSession;
 @property (strong, nonatomic) NSTimer *flickrForegroundFetchTimer;
-@property (strong, nonatomic) NSManagedObjectContext *photoDatabaseContext;
-//---
-@property (strong,nonatomic) NSArray *photosRegion;
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end
 
 // name of the Flickr fetching background download session
@@ -30,15 +30,22 @@
 
 @implementation TopRegionsAppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    self.photoDatabaseContext = [self createMainQueueManagedObjectContext];
     [self startFlickrFetch];
     return YES;
 }
 
+- (void)useRegionDocumentWithFlickrPhotos:(NSArray *)photos
+{
+    [[DBHelper sharedManagedDocument] performWithDocument:^(UIManagedDocument *document) {
+            self.managedObjectContext = document.managedObjectContext;
+            [Photo loadPhotosFromFlickrArray:photos intoManagedObjectContext:self.managedObjectContext];
+            [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:NULL];
+ //           [self.managedObjectContext save:NULL];
+    }];
+}
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [self startFlickrFetch];
@@ -50,11 +57,11 @@
     self.flickrDownloadBackgroundURLSessionCompletionHandler =completionHandler;
 }
 
--(void)setPhotoDatabaseContext:(NSManagedObjectContext *)photoDatabaseContext
+-(void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    _photoDatabaseContext = photoDatabaseContext;
+    _managedObjectContext = managedObjectContext;
     
-    NSDictionary *userInfo = self.photoDatabaseContext ? @{PhotoDatabaseAvailabilityContext: self.photoDatabaseContext} :nil;
+    NSDictionary *userInfo = self.managedObjectContext ? @{PhotoDatabaseAvailabilityContext: self.managedObjectContext} :nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:PhotoDatabaseAvailabilityNotification
                                                         object:self
                                                       userInfo:userInfo];
@@ -120,21 +127,10 @@
 // this was moved here after lecture to give you an example of how to declare a method that takes a block as an argument
 // and because we now do this both as part of our background session delegate handler and when background fetch happens
 
-- (void)loadFlickrPhotosFromLocalURL:(NSURL *)localFile
-                         intoContext:(NSManagedObjectContext *)context
-                 andThenExecuteBlock:(void(^)())whenDone
+- (void)loadFlickrPhotosFromLocalURL:(NSURL *)localFile andThenExecuteBlock:(void(^)())whenDone
 {
     NSArray *photos = [self flickrPhotosAtURL:localFile];
-    if (context) {
-        
-        [context performBlock:^{
-            [Photo loadPhotosFromFlickrArray:photos intoManagedObjectContext:context];
-            [context save:NULL]; // NOT NECESSARY if this is a UIManagedDocument's context
-            if (whenDone) whenDone();
-        }];
-    } else {
-        if (whenDone) whenDone();
-    }
+   [self useRegionDocumentWithFlickrPhotos:photos];
 }
 
 #pragma mark - NSURLSessionDownloadDelegate
@@ -147,7 +143,6 @@ didFinishDownloadingToURL:(NSURL *)localFile
     if ([downloadTask.taskDescription isEqualToString:FLICKR_FETCH]) {
         // ... but if this is the Flickr fetching, then process the returned data
         [self loadFlickrPhotosFromLocalURL:localFile
-                               intoContext:self.photoDatabaseContext
                        andThenExecuteBlock:^{
                            [self flickrDownloadTasksMightBeComplete];
                        }

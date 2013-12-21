@@ -1,8 +1,8 @@
 //
 //  Photographer.h
-//  Photomania
+//  Top Regions
 //
-//  Created by Tatiana Kornilova on 12/18/13.
+//  Created by Tatiana Kornilova on 12/21/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
 //
 
@@ -14,8 +14,8 @@
 @interface Photographer : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) Region *region;
 @property (nonatomic, retain) NSSet *photosByPhotographer;
+@property (nonatomic, retain) Region *region;
 @end
 
 @interface Photographer (CoreDataGeneratedAccessors)

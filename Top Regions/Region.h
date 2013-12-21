@@ -1,8 +1,8 @@
 //
 //  Region.h
-//  Photomania
+//  Top Regions
 //
-//  Created by Tatiana Kornilova on 12/18/13.
+//  Created by Tatiana Kornilova on 12/21/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
 //
 
@@ -14,8 +14,8 @@
 @interface Region : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * countPhotographers;
 @property (nonatomic, retain) NSNumber * countPhotos;
+@property (nonatomic, retain) NSNumber * countPhotographers;
 @property (nonatomic, retain) NSSet *photographers;
 @property (nonatomic, retain) NSSet *photos;
 @end

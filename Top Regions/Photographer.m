@@ -1,8 +1,8 @@
 //
 //  Photographer.m
-//  Photomania
+//  Top Regions
 //
-//  Created by Tatiana Kornilova on 12/18/13.
+//  Created by Tatiana Kornilova on 12/21/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 @implementation Photographer
 
 @dynamic name;
-@dynamic region;
 @dynamic photosByPhotographer;
+@dynamic region;
 
 @end
