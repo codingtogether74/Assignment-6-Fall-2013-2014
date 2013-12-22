@@ -63,6 +63,7 @@
     if ([vc isKindOfClass:[ImageViewController class]]) {
         ImageViewController *ivc = (ImageViewController *)vc;
         ivc.imageURL = [NSURL URLWithString:photo.imageURL];
+    
         ivc.title = photo.title;
         [photo.managedObjectContext performBlock:^{
             [Photo putToResents:photo];

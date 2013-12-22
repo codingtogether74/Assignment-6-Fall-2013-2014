@@ -36,6 +36,9 @@
 		E4B4EE421865F03600EE511F /* Photographer.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE411865F03600EE511F /* Photographer.m */; };
 		E4B4EE451865F03700EE511F /* Region.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE441865F03700EE511F /* Region.m */; };
 		E4B4EE481865F03700EE511F /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE471865F03700EE511F /* Photo.m */; };
+		E4B4EE4B1866033600EE511F /* ResentsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4A1866033600EE511F /* ResentsTVC.m */; };
+		E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */; };
+		E4B4EE511866119800EE511F /* CacheForNSData.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE501866119800EE511F /* CacheForNSData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +101,12 @@
 		E4B4EE441865F03700EE511F /* Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Region.m; sourceTree = "<group>"; };
 		E4B4EE461865F03700EE511F /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		E4B4EE471865F03700EE511F /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		E4B4EE491866033600EE511F /* ResentsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResentsTVC.h; sourceTree = "<group>"; };
+		E4B4EE4A1866033600EE511F /* ResentsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResentsTVC.m; sourceTree = "<group>"; };
+		E4B4EE4C186607B800EE511F /* NetworkIndicatorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkIndicatorHelper.h; sourceTree = "<group>"; };
+		E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkIndicatorHelper.m; sourceTree = "<group>"; };
+		E4B4EE4F1866119800EE511F /* CacheForNSData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheForNSData.h; sourceTree = "<group>"; };
+		E4B4EE501866119800EE511F /* CacheForNSData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheForNSData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,17 +166,19 @@
 		E4B4ED7B1864522D00EE511F /* Top Regions */ = {
 			isa = PBXGroup;
 			children = (
-				E4B4EE0C1864907900EE511F /* Helper */,
-				E4B4EDB21864538F00EE511F /* CoreDataTableViewController */,
 				E4B4EDAD1864537500EE511F /* Flickr Fetcher */,
+				E4B4EE0C1864907900EE511F /* Helper */,
+				E4B4EE181864F4A800EE511F /* Core Data */,
+				E4B4EDB21864538F00EE511F /* CoreDataTableViewController */,
 				E4B4ED8A1864522D00EE511F /* Main_iPad.storyboard */,
 				E4B4ED871864522D00EE511F /* Main_iPhone.storyboard */,
-				E4B4EE181864F4A800EE511F /* Core Data */,
 				E4B4EDE61864560100EE511F /* PhotoDatabaseAvailability.h */,
 				E4B4EE1F1864F71800EE511F /* ImageViewController.h */,
 				E4B4EE201864F71800EE511F /* ImageViewController.m */,
 				E4B4EE1C1864F6B900EE511F /* PhotosCDTVC.h */,
 				E4B4EE1D1864F6B900EE511F /* PhotosCDTVC.m */,
+				E4B4EE491866033600EE511F /* ResentsTVC.h */,
+				E4B4EE4A1866033600EE511F /* ResentsTVC.m */,
 				E4B4EE221864F77100EE511F /* PhotosByRegionCDTVC.h */,
 				E4B4EE231864F77100EE511F /* PhotosByRegionCDTVC.m */,
 				E4B4EDE01864553A00EE511F /* RegionsCDTVC.h */,
@@ -233,6 +244,10 @@
 			children = (
 				E4B4EE1218649A4E00EE511F /* MyUIManagedDocument.h */,
 				E4B4EE1318649A4E00EE511F /* MyUIManagedDocument.m */,
+				E4B4EE4F1866119800EE511F /* CacheForNSData.h */,
+				E4B4EE501866119800EE511F /* CacheForNSData.m */,
+				E4B4EE4C186607B800EE511F /* NetworkIndicatorHelper.h */,
+				E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */,
 				E4B4EE111864923D00EE511F /* DBHelper.h */,
 				E4B4EE0F1864922D00EE511F /* DBHelper.m */,
 			);
@@ -242,13 +257,13 @@
 		E4B4EE181864F4A800EE511F /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				E4B4EDEE18645EB200EE511F /* TopRegions.xcdatamodeld */,
 				E4B4EDCC1864548B00EE511F /* Photo+Flickr.h */,
 				E4B4EDCD1864548B00EE511F /* Photo+Flickr.m */,
 				E4B4EDD11864548B00EE511F /* Photographer+Create.h */,
 				E4B4EDD21864548B00EE511F /* Photographer+Create.m */,
 				E4B4EDDC186454EB00EE511F /* Region+Create.h */,
 				E4B4EDDD186454EB00EE511F /* Region+Create.m */,
-				E4B4EDEE18645EB200EE511F /* TopRegions.xcdatamodeld */,
 				E4B4EE401865F03600EE511F /* Photographer.h */,
 				E4B4EE411865F03600EE511F /* Photographer.m */,
 				E4B4EE431865F03700EE511F /* Region.h */,
@@ -366,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B4EE451865F03700EE511F /* Region.m in Sources */,
+				E4B4EE511866119800EE511F /* CacheForNSData.m in Sources */,
 				E4B4EE1418649A4E00EE511F /* MyUIManagedDocument.m in Sources */,
 				E4B4EE1E1864F6B900EE511F /* PhotosCDTVC.m in Sources */,
 				E4B4EDD61864548B00EE511F /* Photo+Flickr.m in Sources */,
@@ -373,10 +389,12 @@
 				E4B4EE211864F71800EE511F /* ImageViewController.m in Sources */,
 				E4B4EDF018645EB200EE511F /* TopRegions.xcdatamodeld in Sources */,
 				E4B4ED861864522D00EE511F /* TopRegionsAppDelegate.m in Sources */,
+				E4B4EE4B1866033600EE511F /* ResentsTVC.m in Sources */,
 				E4B4EDDF186454EB00EE511F /* Region+Create.m in Sources */,
 				E4B4EE481865F03700EE511F /* Photo.m in Sources */,
 				E4B4EE241864F77100EE511F /* PhotosByRegionCDTVC.m in Sources */,
 				E4B4EE421865F03600EE511F /* Photographer.m in Sources */,
+				E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */,
 				E4B4EDD81864548B00EE511F /* Photographer+Create.m in Sources */,
 				E4B4EE101864922D00EE511F /* DBHelper.m in Sources */,
 				E4B4EDB11864537500EE511F /* FlickrFetcher.m in Sources */,

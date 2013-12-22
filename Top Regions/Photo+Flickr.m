@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "Photographer+Create.h"
 #import "Region+Create.h"
+#import "NetworkIndicatorHelper.h"
 
 @implementation Photo (Flickr)
 
@@ -72,7 +73,9 @@
             NSMutableDictionary *photoWithRegion =[photo mutableCopy];
             NSURL *urlPlace =[FlickrFetcher URLforInformationAboutPlace:[photo valueForKeyPath: FLICKR_PHOTO_PLACE_ID]];
             
+            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:YES];
             NSData *jsonResults = [NSData dataWithContentsOfURL:urlPlace];
+            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:NO];
             NSDictionary *placeInformation =[NSJSONSerialization JSONObjectWithData:jsonResults
                                                                             options:0
                                                                               error:NULL];

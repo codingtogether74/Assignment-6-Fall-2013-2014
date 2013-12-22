@@ -75,10 +75,12 @@
 {
     Region *region = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // note that we don't check the segue identifier here
-    // probably fine ... hard to imagine any other way this class would segue to PhotosByPhotographerCDTVC
+    // probably fine ... hard to imagine any other way this class would segue to PhotosByRegionCDTVC
+
     if ([vc isKindOfClass:[PhotosByRegionCDTVC class]]) {
-        PhotosByRegionCDTVC *pbpcdtvc = (PhotosByRegionCDTVC *)vc;
-        pbpcdtvc.region = region;
+        PhotosByRegionCDTVC *pbrcdtvc = (PhotosByRegionCDTVC *)vc;
+        pbrcdtvc.region = region;
+        pbrcdtvc.title = region.name;
     }
 }
 
