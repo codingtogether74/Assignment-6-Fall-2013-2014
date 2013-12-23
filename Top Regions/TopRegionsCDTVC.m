@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "DBHelper.h"
 #import "Photo+Flickr.h"
+#import "NetworkIndicatorHelper.h"
 
 @interface TopRegionsCDTVC ()
 
@@ -29,6 +30,7 @@
 
 -(void)handleUpdatedData:(NSNotification *)notification {
    [self.refreshControl endRefreshing]; // stop the spinner
+    NSLog(@"Data updated");
 }
 
 -(IBAction)fetchTopPlaces
@@ -42,6 +44,9 @@
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[FlickrFetcher URLforRecentGeoreferencedPhotos]];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
                                                     completionHandler:^(NSURL *localFile, NSURLResponse *response, NSError *error) {
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:NO];
+                                                        });
                                                         if (error) {
                                                             NSLog(@"Flickr background fetch failed: %@", error.localizedDescription);
                                                         } else {
@@ -49,9 +54,8 @@
                                                             [self loadFlickrPhotosFromLocalURL:localFile];
                                                         }
                                                     }];
+    [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:YES];
     [task resume];
-    
-    
 }
 - (NSArray *)flickrPhotosAtURL:(NSURL *)url
 {

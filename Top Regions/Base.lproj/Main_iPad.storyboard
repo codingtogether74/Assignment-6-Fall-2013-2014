@@ -11,7 +11,7 @@
                     <toolbarItems/>
                     <connections>
                         <segue destination="lUM-gZ-oY2" kind="relationship" relationship="masterViewController" id="ZBs-ZG-AFZ"/>
-                        <segue destination="5mB-O3-kCR" kind="relationship" relationship="detailViewController" id="Dai-eh-bO7"/>
+                        <segue destination="FTn-Sx-wYV" kind="relationship" relationship="detailViewController" id="ql7-u8-ea0"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eae-N5-ZNa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -155,48 +155,6 @@
             </objects>
             <point key="canvasLocation" x="1287" y="-1147"/>
         </scene>
-        <!--Image View Controller-->
-        <scene sceneID="eZv-3j-TOw">
-            <objects>
-                <viewController id="VIA-f4-Z4e" customClass="ImageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="9Hy-Aa-KM2"/>
-                        <viewControllerLayoutGuide type="bottom" id="x6k-C8-Ch9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rK6-Je-yIt">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZg-Z2-o6N">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </scrollView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Pjd-2R-In9">
-                                <rect key="frame" x="366" y="494" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Pjd-2R-In9" secondAttribute="centerY" id="18U-uL-ca1"/>
-                            <constraint firstAttribute="bottom" secondItem="HZg-Z2-o6N" secondAttribute="bottom" id="OeX-26-Cpj"/>
-                            <constraint firstItem="HZg-Z2-o6N" firstAttribute="leading" secondItem="rK6-Je-yIt" secondAttribute="leading" id="PwA-p0-n2i"/>
-                            <constraint firstAttribute="trailing" secondItem="HZg-Z2-o6N" secondAttribute="trailing" id="jN5-18-eZ0"/>
-                            <constraint firstItem="HZg-Z2-o6N" firstAttribute="top" secondItem="rK6-Je-yIt" secondAttribute="top" id="lDO-CY-sqm"/>
-                            <constraint firstAttribute="centerX" secondItem="Pjd-2R-In9" secondAttribute="centerX" id="n3F-2p-jtC"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="uS3-Cn-9Dp"/>
-                    <connections>
-                        <outlet property="scrollView" destination="HZg-Z2-o6N" id="Mlx-7L-mvW"/>
-                        <outlet property="spinner" destination="Pjd-2R-In9" id="Rm6-Qp-hbX"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RvT-DP-YUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2198" y="838"/>
-        </scene>
         <!--ResentsTVC - Resents-->
         <scene sceneID="q5c-5X-QaN">
             <objects>
@@ -261,23 +219,65 @@
             </objects>
             <point key="canvasLocation" x="1302" y="-162"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ogR-6Y-VYb">
+        <!--Image View Controller-->
+        <scene sceneID="HSE-Q8-pmb">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5mB-O3-kCR" sceneMemberID="viewController">
+                <viewController id="iIb-nb-d2B" customClass="ImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mbe-Pr-qGR"/>
+                        <viewControllerLayoutGuide type="bottom" id="T5o-vG-rFD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mr3-Xq-pZZ">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ntw-Rv-oc5">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4eg-SH-0XE">
+                                <rect key="frame" x="366" y="494" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="4eg-SH-0XE" secondAttribute="centerX" id="1bT-fy-7Wa"/>
+                            <constraint firstAttribute="centerY" secondItem="4eg-SH-0XE" secondAttribute="centerY" id="53f-R0-IH9"/>
+                            <constraint firstAttribute="bottom" secondItem="ntw-Rv-oc5" secondAttribute="bottom" id="HQh-e4-a2Y"/>
+                            <constraint firstItem="ntw-Rv-oc5" firstAttribute="top" secondItem="mr3-Xq-pZZ" secondAttribute="top" id="WJH-nA-spc"/>
+                            <constraint firstItem="ntw-Rv-oc5" firstAttribute="leading" secondItem="mr3-Xq-pZZ" secondAttribute="leading" id="aCs-bv-d5G"/>
+                            <constraint firstAttribute="trailing" secondItem="ntw-Rv-oc5" secondAttribute="trailing" id="g2Z-pt-Pxd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="YHl-6F-ZD6"/>
+                    <connections>
+                        <outlet property="scrollView" destination="ntw-Rv-oc5" id="oOP-2H-aQI"/>
+                        <outlet property="spinner" destination="4eg-SH-0XE" id="SeA-A2-dOJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hbf-3r-GLl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1900" y="967"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ytv-fA-Me6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FTn-Sx-wYV" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f5k-rG-Sxd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dut-x4-ChF">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="VIA-f4-Z4e" kind="relationship" relationship="rootViewController" id="Dqo-00-z7v"/>
+                        <segue destination="iIb-nb-d2B" kind="relationship" relationship="rootViewController" id="VAe-ms-YTk"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1mn-hb-Cx0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Trv-XK-kdT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1224" y="838"/>
+            <point key="canvasLocation" x="926" y="967"/>
         </scene>
     </scenes>
     <resources>

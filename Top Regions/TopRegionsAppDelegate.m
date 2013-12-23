@@ -196,7 +196,7 @@
 {
     [[DBHelper sharedManagedDocument] performWithDocument:^(UIManagedDocument *document) {
         self.managedObjectContext = document.managedObjectContext;
-        [Photo loadPhotosFromFlickrArray:photos intoManagedObjectContext:self.managedObjectContext];
+        [Photo load1PhotosFromFlickrArray:photos intoManagedObjectContext:self.managedObjectContext];
         [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:NULL];
     }];
 }

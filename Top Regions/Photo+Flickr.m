@@ -11,6 +11,7 @@
 #import "Photographer+Create.h"
 #import "Region+Create.h"
 #import "NetworkIndicatorHelper.h"
+#import "DBHelper.h"
 
 @implementation Photo (Flickr)
 
@@ -60,7 +61,8 @@
     }
     return photo;
 }
-
+/* It's classic, not efficient variant - doesn't use here now , but put for example
+ 
 +(void)loadPhotosFromFlickrArray:(NSArray *)photos // of Flickr NSDictionary
         intoManagedObjectContext:(NSManagedObjectContext *)context
 {
@@ -95,61 +97,28 @@
                 [self photoWithFlickrInfo:photoWithRegion inManagedObjectContext:context];
             });
         }
- //       [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
- //       dispatch_async(dispatch_get_main_queue(), ^{
- //           [self photosWithFlickrInfo:photosWithRegion andPhotoIds:photoIds inManagedObjectContext:context];
- //       });
 
     });
     
 }
+*/
 
 +(void)load1PhotosFromFlickrArray:(NSArray *)photos // of Flickr NSDictionary
-        intoManagedObjectContext:(NSManagedObjectContext *)context
+         intoManagedObjectContext:(NSManagedObjectContext *)context
 {
-    //----
-    dispatch_queue_t placeQ =dispatch_queue_create("place fetcher", NULL);
-    dispatch_async(placeQ, ^{
-        NSMutableSet *photoIds =[[NSMutableSet alloc] init];
-        NSMutableArray *photosWithRegion =[[NSMutableArray alloc] init];
-        for (NSDictionary *photo in photos) {
-            NSMutableDictionary *photoWithRegion =[photo mutableCopy];
-            NSURL *urlPlace =[FlickrFetcher URLforInformationAboutPlace:[photo valueForKeyPath: FLICKR_PHOTO_PLACE_ID]];
-            
-            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:YES];
-            NSData *jsonResults = [NSData dataWithContentsOfURL:urlPlace];
-            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:NO];
-            NSDictionary *placeInformation =[NSJSONSerialization JSONObjectWithData:jsonResults
-                                                                            options:0
-                                                                              error:NULL];
-            NSString *region = [FlickrFetcher extractRegionNameFromPlaceInformation:placeInformation];
-//            NSLog(@"region = %@",region);
-            
-            if (region) {
-                [photoWithRegion setObject:region forKey:@"region"];
-            }else{
-                [photoWithRegion setObject:@"Unknown" forKey:@"region"];
-                
-            }
-            [photoIds addObject:photo[FLICKR_PHOTO_ID]];
-            [photosWithRegion addObject:photoWithRegion];
-        }
-              dispatch_async(dispatch_get_main_queue(), ^{
-                   [self photosWithFlickrInfo:photosWithRegion andPhotoIds:[photoIds copy] inManagedObjectContext:context];
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated"
-                                                                      object:self];
-               });
-        
-    });
+    NSMutableSet *photoIds =[[NSMutableSet alloc] init];
     
+    for (NSDictionary *photo in photos) {
+        [photoIds addObject:photo[FLICKR_PHOTO_ID]];
+    }
+    [self photosWithFlickrInfo:photos andPhotoIds:[photoIds copy] inManagedObjectContext:context];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
 }
 
-+ (NSArray *)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSSet *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
++ (void)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSSet *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    
-    NSMutableArray *photos =nil;
     NSMutableArray *photoNonInDBDictionaries =[photoDictionaries mutableCopy];
-      
+    
     NSFetchRequest *request =[NSFetchRequest fetchRequestWithEntityName:@"Photo"];
     request.predicate = [NSPredicate predicateWithFormat: @"(unique IN %@)", photoIds] ;
     
@@ -169,34 +138,55 @@
                 }
             }
         }
-        for (NSDictionary *photoDictionary in photoNonInDBDictionaries){
-        Photo *photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
-        photo.unique =[photoDictionary valueForKeyPath:FLICKR_PHOTO_ID];
-        photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
-        if ([photo.title length]== 0) {
-            photo.title = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
-            if ([photo.title length]== 0) {
-                photo.title = FLICKR_UNKNOWN_PHOTO;
+        dispatch_queue_t placeQ =dispatch_queue_create("place fetcher", NULL);
+        dispatch_async(placeQ, ^{
+            
+            for (NSDictionary *photoDictionary in photoNonInDBDictionaries){
+                NSURL *urlPlace =[FlickrFetcher URLforInformationAboutPlace:[photoDictionary valueForKeyPath: FLICKR_PHOTO_PLACE_ID]];
+                [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:YES];
+                NSData *jsonResults = [NSData dataWithContentsOfURL:urlPlace];
+                [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:NO];
+                NSDictionary *placeInformation =[NSJSONSerialization JSONObjectWithData:jsonResults
+                                                                                options:0
+                                                                                  error:NULL];
+                NSString *region = [FlickrFetcher extractRegionNameFromPlaceInformation:placeInformation];
+                if (!region) {
+                    region =@"Unknown";
+                }
+                NSLog(@"region = %@",region);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[DBHelper sharedManagedDocument] performWithDocument:^(UIManagedDocument *document) {
+                        Photo *photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:document.managedObjectContext];
+                        photo.unique =[photoDictionary valueForKeyPath:FLICKR_PHOTO_ID];
+                        photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
+                        if ([photo.title length]== 0) {
+                            photo.title = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
+                            if ([photo.title length]== 0) {
+                                photo.title = FLICKR_UNKNOWN_PHOTO;
+                            }
+                        }
+                        photo.subtitle =[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
+                        if ([photo.title isEqualToString:photo.subtitle] || [photo.title isEqualToString:FLICKR_UNKNOWN_PHOTO]) {
+                            photo.subtitle = @"";
+                        }
+                        photo.imageURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
+                        photo.thumbnailURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatSquare] absoluteString];
+                        NSString *photographerName =[photoDictionary valueForKeyPath:FLICKR_PHOTO_OWNER];
+                        
+                        photo.whoTook = [Photographer photographerWithName:photographerName
+                                                             andRegionName:region
+                                                    inManagedObjectContext:context];
+                        photo.region = [Region regionForPhotosWithName:region inManagedObjectContext:context];
+                        //                        [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:NULL];
+                    }];
+                    
+                });
             }
-        }
-        photo.subtitle =[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
-        if ([photo.title isEqualToString:photo.subtitle] || [photo.title isEqualToString:FLICKR_UNKNOWN_PHOTO]) {
-            photo.subtitle = @"";
-        }
-        photo.imageURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
+        });
         
-        NSString *photographerName =[photoDictionary valueForKeyPath:FLICKR_PHOTO_OWNER];
-        NSString *regionName = [photoDictionary valueForKey:@"region"];
-        photo.whoTook = [Photographer photographerWithName:photographerName
-                                             andRegionName:regionName
-                                    inManagedObjectContext:context];
-        //---
-        photo.region = [Region regionForPhotosWithName:regionName inManagedObjectContext:context];
-            [photos addObject:photo];
-        }
     }
-    return [photos copy];
 }
+
 + (Photo *)exisitingPhotoWithID:(NSString *)photoID
          inManagedObjectContext:(NSManagedObjectContext *)context
 {
