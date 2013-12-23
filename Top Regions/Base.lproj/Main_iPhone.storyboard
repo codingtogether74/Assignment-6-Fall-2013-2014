@@ -50,7 +50,7 @@
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="2O1-2E-gFb">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
-                            <action selector="fetchTopPlaces" destination="brX-L2-7Sj" eventType="valueChanged" id="nI1-IR-LDi"/>
+                            <action selector="fetchTopPlaces" destination="brX-L2-7Sj" eventType="valueChanged" id="8cI-lA-CqX"/>
                         </connections>
                     </refreshControl>
                 </tableViewController>
