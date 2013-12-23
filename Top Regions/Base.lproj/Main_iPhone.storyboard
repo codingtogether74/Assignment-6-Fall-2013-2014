@@ -91,7 +91,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="WQg-k9-DaY" kind="push" identifier="Display Photo" id="Q1G-Id-9fm"/>
+                                    <segue destination="QU4-rU-9ch" kind="push" identifier="Display Photo" id="ZTE-eW-tfD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -144,48 +144,6 @@
             </objects>
             <point key="canvasLocation" x="115" y="86"/>
         </scene>
-        <!--Image View Controller-->
-        <scene sceneID="K8C-3b-q9H">
-            <objects>
-                <viewController id="WQg-k9-DaY" customClass="ImageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="P18-fL-nUZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="1Wf-y4-7La"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="U9F-2G-TAg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qdO-Pv-DTx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </scrollView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oPl-Wa-m2a">
-                                <rect key="frame" x="142" y="266" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="qdO-Pv-DTx" firstAttribute="top" secondItem="U9F-2G-TAg" secondAttribute="top" id="64b-bb-Vd7"/>
-                            <constraint firstAttribute="centerX" secondItem="oPl-Wa-m2a" secondAttribute="centerX" id="a3n-SE-bai"/>
-                            <constraint firstAttribute="centerY" secondItem="oPl-Wa-m2a" secondAttribute="centerY" id="fWG-Az-7Ui"/>
-                            <constraint firstItem="qdO-Pv-DTx" firstAttribute="leading" secondItem="U9F-2G-TAg" secondAttribute="leading" id="g1S-X8-iWL"/>
-                            <constraint firstAttribute="trailing" secondItem="qdO-Pv-DTx" secondAttribute="trailing" id="mqb-Nx-NxJ"/>
-                            <constraint firstAttribute="bottom" secondItem="qdO-Pv-DTx" secondAttribute="bottom" id="vvG-sw-pU3"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="bUA-bz-1Kp"/>
-                    <connections>
-                        <outlet property="scrollView" destination="qdO-Pv-DTx" id="GMA-Br-Ofa"/>
-                        <outlet property="spinner" destination="oPl-Wa-m2a" id="UO6-ld-JWg"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ePg-xS-mb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1796" y="414"/>
-        </scene>
         <!--ResentsTVC - Resents-->
         <scene sceneID="uJi-03-8Rs">
             <objects>
@@ -219,7 +177,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="WQg-k9-DaY" kind="push" identifier="Display Photo" id="GNb-MK-71B"/>
+                                    <segue destination="QU4-rU-9ch" kind="push" identifier="Display Photo" id="bZu-W8-nbI"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -253,6 +211,48 @@
             </objects>
             <point key="canvasLocation" x="654" y="750"/>
         </scene>
+        <!--Image View Controller-->
+        <scene sceneID="0pG-e7-npL">
+            <objects>
+                <viewController id="QU4-rU-9ch" customClass="ImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mtm-F3-pY7"/>
+                        <viewControllerLayoutGuide type="bottom" id="ocm-Kb-lb0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pe4-xs-dAO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mcv-Di-mpI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YHH-Tk-8lG">
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mcv-Di-mpI" firstAttribute="top" secondItem="pe4-xs-dAO" secondAttribute="top" id="5wM-U4-ZBl"/>
+                            <constraint firstAttribute="centerY" secondItem="YHH-Tk-8lG" secondAttribute="centerY" id="C7Y-9Z-zkW"/>
+                            <constraint firstAttribute="trailing" secondItem="mcv-Di-mpI" secondAttribute="trailing" id="QWs-or-MiL"/>
+                            <constraint firstItem="mcv-Di-mpI" firstAttribute="leading" secondItem="pe4-xs-dAO" secondAttribute="leading" id="VQ0-zJ-sVi"/>
+                            <constraint firstAttribute="bottom" secondItem="mcv-Di-mpI" secondAttribute="bottom" id="rHL-3T-fuU"/>
+                            <constraint firstAttribute="centerX" secondItem="YHH-Tk-8lG" secondAttribute="centerX" id="xHe-Eg-Ims"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bhT-hE-ope"/>
+                    <connections>
+                        <outlet property="scrollView" destination="mcv-Di-mpI" id="gRk-A3-96r"/>
+                        <outlet property="spinner" destination="YHH-Tk-8lG" id="iy5-pb-yzt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5t7-cO-z0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1643" y="279"/>
+        </scene>
     </scenes>
     <resources>
         <image name="world" width="30" height="30"/>
@@ -263,6 +263,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Q1G-Id-9fm"/>
+        <segue reference="bZu-W8-nbI"/>
     </inferredMetricsTieBreakers>
 </document>

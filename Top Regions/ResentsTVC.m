@@ -43,7 +43,7 @@
         [super viewDidAppear:animated];
         
         if (self.fetchedResultsController.fetchedObjects !=nil) {
-            self.title =[NSString stringWithFormat:@"Photos (%d)",[self.fetchedResultsController.fetchedObjects count]];
+            self.title =[NSString stringWithFormat:@"Photos (%lu)",(unsigned long)[self.fetchedResultsController.fetchedObjects count]];
         } else {
             self.title =[NSString stringWithFormat:@"Photos (-)"];
         }

@@ -45,7 +45,7 @@
 	}] mutableCopy];
 	
 	while (self.cacheSize >= self.maxCacheSize && directoryContents.count > 0) {
-		NSLog(@"cachSize: %i , maxCacheSize: %i , directoryContents.count: %lu ",self.cacheSize, self.maxCacheSize, (unsigned long)directoryContents.count);
+		NSLog(@"cachSize: %lu , maxCacheSize: %lu , directoryContents.count: %lu ",(unsigned long)self.cacheSize,(unsigned long) self.maxCacheSize, (unsigned long)directoryContents.count);
         
 		NSError *hardimitzn = nil;
 		if (![self.fileManager removeItemAtURL:[contentFilesSortedByLastAccessDateNewerToOlderArray lastObject] error:&hardimitzn]) NSLog(@"%@", [hardimitzn localizedDescription]);
@@ -135,7 +135,7 @@
 			fileSize += [fileDictionary fileSize];
 		}
 	}
-		NSLog(@"cacheSize: %d", fileSize);
+		NSLog(@"cacheSize: %lu", (unsigned long)fileSize);
     return fileSize;
 }
 

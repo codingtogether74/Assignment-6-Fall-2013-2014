@@ -29,7 +29,7 @@
 }
 
 -(void)handleUpdatedData:(NSNotification *)notification {
-   [self.refreshControl endRefreshing]; // stop the spinner
+    if(self.refreshControl.isRefreshing)  [self.refreshControl endRefreshing]; // stop the spinner
     NSLog(@"Data updated");
 }
 
