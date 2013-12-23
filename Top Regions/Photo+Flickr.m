@@ -67,7 +67,7 @@
     //----
     dispatch_queue_t placeQ =dispatch_queue_create("place fetcher", NULL);
     dispatch_async(placeQ, ^{
-        NSMutableArray *photoIds =[[NSMutableArray alloc] init];
+        NSMutableSet *photoIds =[[NSMutableSet alloc] init];
         NSMutableArray *photosWithRegion =[[NSMutableArray alloc] init];
         for (NSDictionary *photo in photos) {
             NSMutableDictionary *photoWithRegion =[photo mutableCopy];
@@ -95,6 +95,7 @@
                 [self photoWithFlickrInfo:photoWithRegion inManagedObjectContext:context];
             });
         }
+ //       [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
  //       dispatch_async(dispatch_get_main_queue(), ^{
  //           [self photosWithFlickrInfo:photosWithRegion andPhotoIds:photoIds inManagedObjectContext:context];
  //       });
@@ -103,12 +104,52 @@
     
 }
 
-+ (NSArray *)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSArray *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
++(void)load1PhotosFromFlickrArray:(NSArray *)photos // of Flickr NSDictionary
+        intoManagedObjectContext:(NSManagedObjectContext *)context
+{
+    //----
+    dispatch_queue_t placeQ =dispatch_queue_create("place fetcher", NULL);
+    dispatch_async(placeQ, ^{
+        NSMutableSet *photoIds =[[NSMutableSet alloc] init];
+        NSMutableArray *photosWithRegion =[[NSMutableArray alloc] init];
+        for (NSDictionary *photo in photos) {
+            NSMutableDictionary *photoWithRegion =[photo mutableCopy];
+            NSURL *urlPlace =[FlickrFetcher URLforInformationAboutPlace:[photo valueForKeyPath: FLICKR_PHOTO_PLACE_ID]];
+            
+            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:YES];
+            NSData *jsonResults = [NSData dataWithContentsOfURL:urlPlace];
+            [NetworkIndicatorHelper setNetworkActivityIndicatorVisible:NO];
+            NSDictionary *placeInformation =[NSJSONSerialization JSONObjectWithData:jsonResults
+                                                                            options:0
+                                                                              error:NULL];
+            NSString *region = [FlickrFetcher extractRegionNameFromPlaceInformation:placeInformation];
+//            NSLog(@"region = %@",region);
+            
+            if (region) {
+                [photoWithRegion setObject:region forKey:@"region"];
+            }else{
+                [photoWithRegion setObject:@"Unknown" forKey:@"region"];
+                
+            }
+            [photoIds addObject:photo[FLICKR_PHOTO_ID]];
+            [photosWithRegion addObject:photoWithRegion];
+        }
+              dispatch_async(dispatch_get_main_queue(), ^{
+                   [self photosWithFlickrInfo:photosWithRegion andPhotoIds:[photoIds copy] inManagedObjectContext:context];
+                   [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated"
+                                                                      object:self];
+               });
+        
+    });
+    
+}
+
++ (NSArray *)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSSet *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
 {
     
     NSMutableArray *photos =nil;
     NSMutableArray *photoNonInDBDictionaries =[photoDictionaries mutableCopy];
-   
+      
     NSFetchRequest *request =[NSFetchRequest fetchRequestWithEntityName:@"Photo"];
     request.predicate = [NSPredicate predicateWithFormat: @"(unique IN %@)", photoIds] ;
     
@@ -116,18 +157,15 @@
     NSArray *matches =[context executeFetchRequest:request error:&error];
     if (!matches || error) {
         // handle error
-   }else if ([matches count]){
-        photos = [matches copy];
     }else {
         NSString *uniquePhoto;
         NSString *uniqueFlickr;
         for (Photo *photo in matches) {
             uniquePhoto =photo.unique;
-            [photos addObject:photo];
-            for (NSDictionary *photoFlickrInfo in photoDictionaries) {
-                uniqueFlickr = photoFlickrInfo [FLICKR_PHOTO_ID];
+            for (NSDictionary *photoDictionary in photoDictionaries) {
+                uniqueFlickr=[photoDictionary valueForKeyPath:FLICKR_PHOTO_ID];
                 if ([uniqueFlickr isEqualToString:uniquePhoto]) {
-                    [photoNonInDBDictionaries removeObject:photoFlickrInfo];
+                    [photoNonInDBDictionaries removeObject:photoDictionary];
                 }
             }
         }

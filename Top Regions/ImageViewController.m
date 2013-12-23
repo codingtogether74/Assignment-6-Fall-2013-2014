@@ -7,12 +7,16 @@
 //
 
 #import "ImageViewController.h"
+#import "CacheForNSData.h"
 
 @interface ImageViewController () <UIScrollViewDelegate, UISplitViewControllerDelegate>
 @property (nonatomic,strong) UIImageView *imageView;
 @property (nonatomic,strong) UIImage *image;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
+
+
 @property (nonatomic, getter = isAutoZoomed) BOOL autoZoomed;
 @end
 
@@ -46,22 +50,47 @@
 
 -(void)startDownLoadImage
 {
+    [self.spinner startAnimating];
     self.image =nil;
-
+    self.autoZoomed = YES;
+    self.scrollView.contentSize =CGSizeZero;
     if (self.imageURL) {
-        [self.spinner startAnimating];
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.imageURL];
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *localfile, NSURLResponse *response, NSError *error) {
-            if (!error) {
-                if ([request.URL isEqual:self.imageURL]) {
-                    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:localfile]];
-                    dispatch_async(dispatch_get_main_queue(), ^{self.image =image;});
+        //------------------From Cache------------
+        NSURL *imageURL =self.imageURL;
+        NSString *fileURLlast = [[self.imageURL pathComponents] lastObject];
+        NSData *imageData = [[CacheForNSData sharedInstance] dataInCacheForIdentifier:fileURLlast];
+        
+        if (!imageData){
+            //-------------------------- From Network ---------------------
+            NSURLRequest *request = [NSURLRequest requestWithURL:self.imageURL];
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+            NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *localfile, NSURLResponse *response, NSError *error) {
+                if (!error) {
+                    //------------ In Cache-----------------
+                    NSString *fileURLlast = [[request.URL pathComponents] lastObject];
+                    NSData *imageData = [[NSData alloc] initWithContentsOfURL:localfile];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                        [[CacheForNSData sharedInstance] cacheData:imageData withIdentifier:fileURLlast];
+                    });
+                    //------------------- On Screen -------------------
+                    if ([request.URL isEqual:self.imageURL]) {
+                        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:localfile]];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            self.image =image;
+                        });
+                    }
                 }
+            }];
+            [task resume];
+            //----------------------------------------------------------------
+        } else {
+            //------------------- On Screen Cache-------------------
+            if ([imageURL isEqual:self.imageURL]) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                self.image =image;
             }
-        }];
-        [task resume];
+        }
     }
 }
 
@@ -78,13 +107,14 @@
 
 -(void)setImage:(UIImage *)image
 {
+    [self.spinner stopAnimating];
     self.scrollView.zoomScale =1.0;
     self.imageView.image =image;
     self.imageView.frame =CGRectMake(0, 0, image.size.width, image.size.height);
     self.scrollView.contentSize = self.image ? self.image.size : CGSizeZero;
     self.autoZoomed = YES;
     [self zoomScaleToFit];
-    [self.spinner stopAnimating];
+
 }
 
 // Calculate zoom scale to fit the image in the screen without blank spaces

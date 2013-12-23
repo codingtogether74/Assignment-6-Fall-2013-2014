@@ -27,6 +27,7 @@
                                                   usingBlock:^(NSNotification *note) {
                                                       self.managedObjectContext = note.userInfo[PhotoDatabaseAvailabilityContext];
                                                   }];
+
 }
 
 -(void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext

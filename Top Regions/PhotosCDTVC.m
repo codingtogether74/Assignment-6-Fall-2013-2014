@@ -9,6 +9,7 @@
 #import "PhotosCDTVC.h"
 #import "Photo+Flickr.h"
 #import "ImageViewController.h"
+#import "Region.h"
 
 @implementation PhotosCDTVC
 
@@ -65,6 +66,7 @@
         ivc.imageURL = [NSURL URLWithString:photo.imageURL];
     
         ivc.title = photo.title;
+        ivc.navigationItem.leftBarButtonItem.title=((Region *)photo.region).name;
         [photo.managedObjectContext performBlock:^{
             [Photo putToResents:photo];
         }];

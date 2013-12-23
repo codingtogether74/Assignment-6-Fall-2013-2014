@@ -39,6 +39,7 @@
 		E4B4EE4B1866033600EE511F /* ResentsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4A1866033600EE511F /* ResentsTVC.m */; };
 		E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */; };
 		E4B4EE511866119800EE511F /* CacheForNSData.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE501866119800EE511F /* CacheForNSData.m */; };
+		E4B4EE541866E25500EE511F /* TopRegionsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE531866E25500EE511F /* TopRegionsCDTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,8 @@
 		E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkIndicatorHelper.m; sourceTree = "<group>"; };
 		E4B4EE4F1866119800EE511F /* CacheForNSData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheForNSData.h; sourceTree = "<group>"; };
 		E4B4EE501866119800EE511F /* CacheForNSData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheForNSData.m; sourceTree = "<group>"; };
+		E4B4EE521866E25500EE511F /* TopRegionsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopRegionsCDTVC.h; sourceTree = "<group>"; };
+		E4B4EE531866E25500EE511F /* TopRegionsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopRegionsCDTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +188,8 @@
 				E4B4EDE11864553A00EE511F /* RegionsCDTVC.m */,
 				E4B4ED841864522D00EE511F /* TopRegionsAppDelegate.h */,
 				E4B4ED851864522D00EE511F /* TopRegionsAppDelegate.m */,
+				E4B4EE521866E25500EE511F /* TopRegionsCDTVC.h */,
+				E4B4EE531866E25500EE511F /* TopRegionsCDTVC.m */,
 				E4B4ED901864522D00EE511F /* Images.xcassets */,
 				E4B4ED7C1864522D00EE511F /* Supporting Files */,
 			);
@@ -396,6 +401,7 @@
 				E4B4EE421865F03600EE511F /* Photographer.m in Sources */,
 				E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */,
 				E4B4EDD81864548B00EE511F /* Photographer+Create.m in Sources */,
+				E4B4EE541866E25500EE511F /* TopRegionsCDTVC.m in Sources */,
 				E4B4EE101864922D00EE511F /* DBHelper.m in Sources */,
 				E4B4EDB11864537500EE511F /* FlickrFetcher.m in Sources */,
 				E4B4EDB81864538F00EE511F /* CoreDataTableViewController.m in Sources */,
