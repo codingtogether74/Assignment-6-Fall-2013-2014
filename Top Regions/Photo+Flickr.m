@@ -112,7 +112,7 @@
         [photoIds addObject:photo[FLICKR_PHOTO_ID]];
     }
     [self photosWithFlickrInfo:photos andPhotoIds:[photoIds copy] inManagedObjectContext:context];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
+ 
 }
 
 + (void)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSSet *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
@@ -182,6 +182,7 @@
                     
                 });
             }
+               [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
         });
         
     }

@@ -52,7 +52,7 @@
     // we don't want it to take too long because the system will start to lose faith in us as a background fetcher and stop calling this as much
     // so we'll limit the fetch to BACKGROUND_FETCH_TIMEOUT seconds (also we won't use valuable cellular data)
     
-    if (self.managedObjectContext) {
+//    if (self.managedObjectContext) {
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         sessionConfig.allowsCellularAccess = NO;
         sessionConfig.timeoutIntervalForRequest = BACKGROUND_FLICKR_FETCH_TIMEOUT; // want to be a good background citizen!
@@ -72,9 +72,9 @@
                                                             }
                                                         }];
         [task resume];
-   } else {
-       completionHandler(UIBackgroundFetchResultNoData); // no app-switcher update if no database!
-  }
+//   } else {
+//       completionHandler(UIBackgroundFetchResultNoData); // no app-switcher update if no database!
+//  }
 }
 
 
@@ -209,6 +209,7 @@
 {
     NSArray *photos = [self flickrPhotosAtURL:localFile];
    [self useRegionDocumentWithFlickrPhotos:photos];
+    if (whenDone) whenDone();
 }
 
 #pragma mark - NSURLSessionDownloadDelegate
