@@ -121,7 +121,12 @@
     
     NSFetchRequest *request =[NSFetchRequest fetchRequestWithEntityName:@"Photo"];
     request.predicate = [NSPredicate predicateWithFormat: @"(unique IN %@)", photoIds] ;
+    // narrow the fetch to these one properties
+    request.propertiesToFetch = [NSArray arrayWithObjects:@"unique",nil];
+    [request setResultType:NSDictionaryResultType];
     
+    request.fetchBatchSize =20;
+   
     NSError *error;
     NSArray *matches =[context executeFetchRequest:request error:&error];
     if (!matches || error) {
@@ -129,8 +134,8 @@
     }else {
         NSString *uniquePhoto;
         NSString *uniqueFlickr;
-        for (Photo *photo in matches) {
-            uniquePhoto =photo.unique;
+        for (NSDictionary *photo in matches) {
+            uniquePhoto =photo[@"unique"];
             for (NSDictionary *photoDictionary in photoDictionaries) {
                 uniqueFlickr=[photoDictionary valueForKeyPath:FLICKR_PHOTO_ID];
                 if ([uniqueFlickr isEqualToString:uniquePhoto]) {
