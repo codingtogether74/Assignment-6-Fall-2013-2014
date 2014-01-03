@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E49800C7186B1A6C00875AA0 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E49800C6186B1A6C00875AA0 /* Photo.m */; };
 		E4B4ED761864522D00EE511F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B4ED751864522D00EE511F /* Foundation.framework */; };
 		E4B4ED781864522D00EE511F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B4ED771864522D00EE511F /* CoreGraphics.framework */; };
 		E4B4ED7A1864522D00EE511F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B4ED791864522D00EE511F /* UIKit.framework */; };
@@ -35,7 +36,6 @@
 		E4B4EE241864F77100EE511F /* PhotosByRegionCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE231864F77100EE511F /* PhotosByRegionCDTVC.m */; };
 		E4B4EE421865F03600EE511F /* Photographer.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE411865F03600EE511F /* Photographer.m */; };
 		E4B4EE451865F03700EE511F /* Region.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE441865F03700EE511F /* Region.m */; };
-		E4B4EE481865F03700EE511F /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE471865F03700EE511F /* Photo.m */; };
 		E4B4EE4B1866033600EE511F /* ResentsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4A1866033600EE511F /* ResentsTVC.m */; };
 		E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE4D186607B800EE511F /* NetworkIndicatorHelper.m */; };
 		E4B4EE511866119800EE511F /* CacheForNSData.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B4EE501866119800EE511F /* CacheForNSData.m */; };
@@ -53,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E49800C5186B1A6C00875AA0 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		E49800C6186B1A6C00875AA0 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		E4B4ED721864522D00EE511F /* Top Regions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Regions.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B4ED751864522D00EE511F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4B4ED771864522D00EE511F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -100,8 +102,6 @@
 		E4B4EE411865F03600EE511F /* Photographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photographer.m; sourceTree = "<group>"; };
 		E4B4EE431865F03700EE511F /* Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Region.h; sourceTree = "<group>"; };
 		E4B4EE441865F03700EE511F /* Region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Region.m; sourceTree = "<group>"; };
-		E4B4EE461865F03700EE511F /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
-		E4B4EE471865F03700EE511F /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		E4B4EE491866033600EE511F /* ResentsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResentsTVC.h; sourceTree = "<group>"; };
 		E4B4EE4A1866033600EE511F /* ResentsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResentsTVC.m; sourceTree = "<group>"; };
 		E4B4EE4C186607B800EE511F /* NetworkIndicatorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkIndicatorHelper.h; sourceTree = "<group>"; };
@@ -263,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				E4B4EDEE18645EB200EE511F /* TopRegions.xcdatamodeld */,
+				E49800C5186B1A6C00875AA0 /* Photo.h */,
+				E49800C6186B1A6C00875AA0 /* Photo.m */,
 				E4B4EDCC1864548B00EE511F /* Photo+Flickr.h */,
 				E4B4EDCD1864548B00EE511F /* Photo+Flickr.m */,
 				E4B4EDD11864548B00EE511F /* Photographer+Create.h */,
@@ -273,8 +275,6 @@
 				E4B4EE411865F03600EE511F /* Photographer.m */,
 				E4B4EE431865F03700EE511F /* Region.h */,
 				E4B4EE441865F03700EE511F /* Region.m */,
-				E4B4EE461865F03700EE511F /* Photo.h */,
-				E4B4EE471865F03700EE511F /* Photo.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -385,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E49800C7186B1A6C00875AA0 /* Photo.m in Sources */,
 				E4B4EE451865F03700EE511F /* Region.m in Sources */,
 				E4B4EE511866119800EE511F /* CacheForNSData.m in Sources */,
 				E4B4EE1418649A4E00EE511F /* MyUIManagedDocument.m in Sources */,
@@ -396,7 +397,6 @@
 				E4B4ED861864522D00EE511F /* TopRegionsAppDelegate.m in Sources */,
 				E4B4EE4B1866033600EE511F /* ResentsTVC.m in Sources */,
 				E4B4EDDF186454EB00EE511F /* Region+Create.m in Sources */,
-				E4B4EE481865F03700EE511F /* Photo.m in Sources */,
 				E4B4EE241864F77100EE511F /* PhotosByRegionCDTVC.m in Sources */,
 				E4B4EE421865F03600EE511F /* Photographer.m in Sources */,
 				E4B4EE4E186607B800EE511F /* NetworkIndicatorHelper.m in Sources */,

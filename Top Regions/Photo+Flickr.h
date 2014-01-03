@@ -22,5 +22,7 @@
 + (void)putToResents:(Photo *)photo;
 + (Photo *)exisitingPhotoWithID:(NSString *)photoID
          inManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)removePhotoWithID:(NSString *)photoID inManagedObjectContext:(NSManagedObjectContext *)context
+;
 
 @end

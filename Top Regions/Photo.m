@@ -2,7 +2,7 @@
 //  Photo.m
 //  Top Regions
 //
-//  Created by Tatiana Kornilova on 12/21/13.
+//  Created by Tatiana Kornilova on 12/25/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
 //
 
@@ -13,14 +13,15 @@
 
 @implementation Photo
 
-@dynamic unique;
-@dynamic title;
-@dynamic subtitle;
-@dynamic imageURL;
-@dynamic thumbnailURL;
-@dynamic thumbnail;
 @dynamic dateStamp;
-@dynamic whoTook;
+@dynamic imageURL;
+@dynamic subtitle;
+@dynamic thumbnail;
+@dynamic thumbnailURL;
+@dynamic title;
+@dynamic unique;
+@dynamic dateUpload;
 @dynamic region;
+@dynamic whoTook;
 
 @end

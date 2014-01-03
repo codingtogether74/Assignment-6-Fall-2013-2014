@@ -36,6 +36,8 @@
     }else {
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
         photo.unique =unique;
+        NSString *dateUpload = [photoDictionary valueForKeyPath:FLICKR_PHOTO_UPLOAD_DATE];
+        photo.dateUpload = [NSDate dateWithTimeIntervalSince1970:[dateUpload doubleValue]];
         photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
         if ([photo.title length]== 0) {
             photo.title = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
@@ -112,7 +114,7 @@
         [photoIds addObject:photo[FLICKR_PHOTO_ID]];
     }
     [self photosWithFlickrInfo:photos andPhotoIds:[photoIds copy] inManagedObjectContext:context];
- 
+//    [self deleteOldPhotosInManagedObjectContext:context];
 }
 
 + (void)photosWithFlickrInfo:(NSArray *)photoDictionaries andPhotoIds:(NSSet *)photoIds inManagedObjectContext:(NSManagedObjectContext *)context
@@ -164,6 +166,8 @@
                         Photo *photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:document.managedObjectContext];
                         photo.unique =[photoDictionary valueForKeyPath:FLICKR_PHOTO_ID];
                         photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
+                        NSString *dateUpload = [photoDictionary valueForKeyPath:FLICKR_PHOTO_UPLOAD_DATE];
+                        photo.dateUpload = [NSDate dateWithTimeIntervalSince1970:[dateUpload doubleValue]];
                         if ([photo.title length]== 0) {
                             photo.title = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
                             if ([photo.title length]== 0) {
@@ -188,6 +192,16 @@
                 });
             }
                [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
+            //--
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[DBHelper sharedManagedDocument] performWithDocument:^(UIManagedDocument *document) {
+                    [self deleteOldPhotosInManagedObjectContext:document.managedObjectContext];
+ 
+                      }];
+                });
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated" object:self];
+
+            //--
         });
         
     }
@@ -205,7 +219,7 @@
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     if (!matches || ([matches count] > 1 || error)) {
-        NSLog(@"Error in exisitingPhotoForID: %@ %@", matches, error);
+//        NSLog(@"Error in exisitingPhotoForID: %@ %@", matches, error);
     } else if ([matches count] == 0) {
         photo = nil;
     } else {
@@ -214,12 +228,80 @@
     return photo;
 }
 
-
 + (void)putToResents:(Photo *)photo
 {
     NSManagedObjectContext *context = photo.managedObjectContext;
     [Photo exisitingPhotoWithID:photo.unique inManagedObjectContext:context].dateStamp = [NSDate date];
     [context updatedObjects];
+}
+
++ (void)deleteOldPhotosInManagedObjectContext:(NSManagedObjectContext *)context
+{
+    // keep our number of photos to a manageable level, remove photos older than 2 weeks
+    // compute the date two weeks ago from today, used later when dumping older photos
+    //
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
+    [offsetComponents setDay:-14];  // 14 days back from today
+    NSDate *twoWeeksAgo = [gregorian dateByAddingComponents:offsetComponents toDate:[NSDate date] options:0];
+    
+    // use the same request instance but switch back to NSManagedObjectResultType
+    NSFetchRequest *request =[NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+    request.resultType = NSManagedObjectResultType;
+    request.predicate = [NSPredicate predicateWithFormat:@"dateUpload < %@", twoWeeksAgo];
+    NSError *error = nil;
+    NSArray *oldPhotos = [context executeFetchRequest:request error:&error];
+    NSInteger i=0;
+    NSInteger numberOfOldPhotos =[oldPhotos count];
+    NSLog(@"Number of old photos = %d",numberOfOldPhotos);
+    for (Photo *photo in oldPhotos) {
+        [Photo removePhotoWithID:photo.unique inManagedObjectContext:photo.managedObjectContext];
+        NSLog(@"Delete %d/%d old photo",i,numberOfOldPhotos);
+        i++;
+    }
+    
+    if ([context hasChanges]) {
+        
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate.
+            // You should not use this function in a shipping application, although it may be useful
+            // during development. If it is not possible to recover from the error, display an alert
+            // panel that instructs the user to quit the application by pressing the Home button.
+            //
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
++ (void)removePhoto:(Photo *)photo
+{
+    NSManagedObjectContext *context = photo.managedObjectContext;
+    // tags and place could be put in prepareForDeletion
+{
+    Region *regionPhoto = photo.region;
+    if ([photo.whoTook.photosByPhotographer count] == 1){
+        
+        if ([regionPhoto.countPhotographers intValue]== 1) [context deleteObject:regionPhoto];
+        else regionPhoto.countPhotographers =[NSNumber numberWithInt:[regionPhoto.countPhotographers intValue] - 1];                 [context deleteObject:photo.whoTook];
+    }
+    
+    if ([regionPhoto.countPhotos intValue]== 1){
+            [context deleteObject:regionPhoto];
+    } else {
+        
+    regionPhoto.countPhotos =[NSNumber numberWithInt:[regionPhoto.countPhotos intValue] - 1];
+}
+    [context updatedObjects];
+    [context deleteObject:photo];
+}
+}
+
++ (void)removePhotoWithID:(NSString *)photoID
+   inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Photo *photo = [Photo exisitingPhotoWithID:photoID inManagedObjectContext:context];
+    [Photo removePhoto:photo];
 }
 
 

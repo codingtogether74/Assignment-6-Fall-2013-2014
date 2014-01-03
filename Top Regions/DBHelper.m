@@ -9,7 +9,7 @@
 #import "DBHelper.h"
 #import "MyUIManagedDocument.h"
 
-#define DEFAULT_DB_NAME @"Region Photos Database"
+#define DEFAULT_DB_NAME @"RegionPhotosDatabase"
 
 @implementation DBHelper
 
@@ -31,6 +31,8 @@
         NSURL *baseDir=[[fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
         _database = [[MyUIManagedDocument alloc] initWithFileURL:
                      [baseDir URLByAppendingPathComponent:self.dbName]];
+
+        NSLog(@"Core Data: %@%@",[baseDir URLByAppendingPathComponent:self.dbName],[MyUIManagedDocument persistentStoreName]);
     }
     return _database;
 }

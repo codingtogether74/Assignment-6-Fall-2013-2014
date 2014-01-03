@@ -2,7 +2,7 @@
 //  Photo.h
 //  Top Regions
 //
-//  Created by Tatiana Kornilova on 12/21/13.
+//  Created by Tatiana Kornilova on 12/25/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
 //
 
@@ -13,14 +13,15 @@
 
 @interface Photo : NSManagedObject
 
-@property (nonatomic, retain) NSString * unique;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * subtitle;
-@property (nonatomic, retain) NSString * imageURL;
-@property (nonatomic, retain) NSString * thumbnailURL;
-@property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSDate * dateStamp;
-@property (nonatomic, retain) Photographer *whoTook;
+@property (nonatomic, retain) NSString * imageURL;
+@property (nonatomic, retain) NSString * subtitle;
+@property (nonatomic, retain) NSData * thumbnail;
+@property (nonatomic, retain) NSString * thumbnailURL;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * unique;
+@property (nonatomic, retain) NSDate * dateUpload;
 @property (nonatomic, retain) Region *region;
+@property (nonatomic, retain) Photographer *whoTook;
 
 @end

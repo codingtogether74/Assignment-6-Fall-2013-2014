@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Photo" representedClassName="Photo" syncable="YES">
         <attribute name="dateStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateUpload" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -24,8 +25,8 @@
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="region" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Photo" positionX="160" positionY="192" width="128" height="133"/>
-        <element name="Photographer" positionX="-261" positionY="180" width="128" height="88"/>
-        <element name="Region" positionX="-63" positionY="45" width="128" height="118"/>
+        <element name="Photo" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Photographer" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Region" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

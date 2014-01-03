@@ -4,7 +4,7 @@
 //
 //  Created by Tatiana Kornilova on 12/14/13.
 //  Copyright (c) 2013 Tatiana Kornilova. All rights reserved.
-//
+//  More accurate calculation zoomScaleToFit take from Martin Mandl https://github.com/m2mtech/topplaces-2013-14/tree/assignment5task10
 
 #import "ImageViewController.h"
 #import "CacheForNSData.h"
@@ -157,7 +157,12 @@
     // if is AutoZoomed then set the zoomScale property only if the geometry is completely loaded
     if ((self.isAutoZoomed)&&(self.imageView.bounds.size.width)&&(self.scrollView.bounds.size.width)) {
         CGFloat widthRatio  = self.scrollView.bounds.size.width  / self.imageView.bounds.size.width;
-        CGFloat heightRatio = self.scrollView.bounds.size.height / self.imageView.bounds.size.height;
+        CGFloat heightRatio = (self.scrollView.bounds.size.height
+                               - self.navigationController.navigationBar.frame.size.height
+                               - self.tabBarController.tabBar.frame.size.height
+                               - MIN([UIApplication sharedApplication].statusBarFrame.size.height,
+                                     [UIApplication sharedApplication].statusBarFrame.size.width)
+                               )/ self.imageView.bounds.size.height;
         self.scrollView.zoomScale = (widthRatio > heightRatio) ? widthRatio : heightRatio;
     }
 }
