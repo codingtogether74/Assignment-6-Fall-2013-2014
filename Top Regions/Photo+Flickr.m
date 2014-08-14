@@ -242,7 +242,7 @@
     //
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setDay:-14];  // 14 days back from today
+    [offsetComponents setDay:-7];  // 7 days back from today
     NSDate *twoWeeksAgo = [gregorian dateByAddingComponents:offsetComponents toDate:[NSDate date] options:0];
     
     // use the same request instance but switch back to NSManagedObjectResultType
@@ -253,10 +253,10 @@
     NSArray *oldPhotos = [context executeFetchRequest:request error:&error];
     NSInteger i=0;
     NSInteger numberOfOldPhotos =[oldPhotos count];
-    NSLog(@"Number of old photos = %d",numberOfOldPhotos);
+    NSLog(@"Number of old photos = %ld",(long)numberOfOldPhotos);
     for (Photo *photo in oldPhotos) {
         [Photo removePhotoWithID:photo.unique inManagedObjectContext:photo.managedObjectContext];
-        NSLog(@"Delete %d/%d old photo",i,numberOfOldPhotos);
+        NSLog(@"Delete %ld/%ld old photo",(long)i,(long)numberOfOldPhotos);
         i++;
     }
     
